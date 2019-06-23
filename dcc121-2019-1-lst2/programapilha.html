@@ -3,26 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>Pilha</title>
+    <style>
+        table{
+            margin: 0.5em;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        tbody>tr>td{
+            border: 0.5px;
+            border-style: dashed;
+            border-color: #3f51b5;
+        }
+        #desempilhar{
+            width: 100%;
+        }
+    </style>
+
 </head>
 <body>
-  <h1>Pilha!</h1>
-     Entrada: <input type="number" name="entrada">
-     <button id="empilhar">Empilhar</button>
+    <h1>Pilha!</h1>
+    Entrada: <input type="number" id="entrada">
+    
+    <button id="empilhar">Empilhar</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <td>Representar Pilha</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td><button id="desempilhar">Desempilhar</button></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    
 
-     <table>
-     <thead>
-         <tr>
-             <td>Representar Pilha</td>
-         </tr>
-     </thead>
-     <tbody></tbody>
-     <tfoot>
-         <tr>
-             <td><button id="desempilhar">Desempilhar</button></td>
-         </tr>
-     </tfoot>
- </table>
- <script>
-</script>
+    <script>
+        var pilha=[];
+        
+        //Referencias
+        var campoEntrada = document.getElementById("entrada");
+        var botaoEmpilhar = document.getElementById("empilhar");
+        var botaoDesempilhar = document.getElementById("desempilhar");
+        var tabela = document.getElementsByTagName("tbody")[0];
+        //Eventos dos botoes
+        botaoEmpilhar.addEventListener("click",empilhar);
+        botaoDesempilhar.addEventListener("click",desempilhar);
+        function empilhar(){
+            if(campoEntrada.value!=""){
+                pilha.push(campoEntrada.value);
+                atualizarPilha();
+            } 
+        }
+            
+        function desempilhar(){
+            pilha.splice(pilha.length-1,1);
+            atualizarPilha();
+        }
+        function atualizarPilha(){
+            tabela.innerHTML=""
+            for (var i = pilha.length-1; i >= 0; i--) {
+                var novoTr = document.createElement("tr");
+                var novoTd = document.createElement("td");
+                
+                novoTd.innerText = pilha[i]
+                novoTr.appendChild(novoTd);
+                tabela.appendChild(novoTr);
+            } 
+        }
+    </script>
 </body>
 </html>

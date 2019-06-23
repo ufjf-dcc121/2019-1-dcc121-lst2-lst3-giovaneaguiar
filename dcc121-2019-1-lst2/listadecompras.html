@@ -25,6 +25,36 @@
     </table>
     <button id="limpar">Limpar</button>
 <script>
+    document.forms.compras.addEventListener("submit",processaEnvio)
+        var tabela = document.getElementsByTagName("tbody")[0]
+        var limpar = document.getElementById("limpar");
+        function processaEnvio(e){
+            e.preventDefault();
+            
+            var nome = document.forms.compras.nome.value
+            var quantidade = Number(document.forms.compras.quant.value)
+            if(nome!="" && quantidade!=""){
+                
+                //adicionando novos elementos
+                var novoTr = document.createElement("tr")
+                var novoTdNome = document.createElement("td")
+                var novoTdQuantidade = document.createElement("td")
+                
+                //adicionando valores de cada td
+                novoTdNome.textContent = nome
+                novoTdQuantidade.textContent = quantidade
+                
+                //adicionando as novas tag para a tabela
+                novoTr.appendChild(novoTdNome)
+                novoTr.appendChild(novoTdQuantidade)
+                tabela.appendChild(novoTr)
+                document.forms.compras.reset();
+                document.forms.compras.nome.focus();
+            }
+        }
+        limpar.addEventListener("click",function(){
+            tabela.innerHTML="";
+        })
 </script>
 </body>
 </html>

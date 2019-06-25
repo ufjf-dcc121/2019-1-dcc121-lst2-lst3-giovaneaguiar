@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excursão</title>
+    <style>
+        input.dados{
+            width: 100%;
+        }
+        .botoes{
+            text-align:right;
+        }    
+        table{
+            padding: 0.5em;
+            border: 0.1em solid;
+            margin: 0.5em;
+        }
+        div{
+            margin-left: 0.5em;
+            width: 243px;
+            border: 0.1em dashed;
+        }
+        p{
+            padding-left: 0.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Participantes da Excursão</h1>
+    <form name="cadastro">
+        <table>
+            <tr>
+                <td>Nome: </td>
+                <td><input class="dados" type="text" name="nome" placeholder="Digite o nome aqui" required></td>
+            </tr>
+            <tr>
+                <td>Idade: </td>
+                <td><input class="dados" type="number" name="idade" placeholder="0" min="0" required></td>
+            </tr>
+            <tr>
+                <td class="botoes"  colspan="2">
+                    <input type="button" value="Excluir" name="excluir" >
+                    <input type="submit" value="Inscrever" name="inscrever" >
+                </td>
+            </tr>
+        </table>    
+    </form>
+    
+    <div>
+        <p>Adultos</p>
+        <ul id="adultos"></ul>
+        <p>Estudantes</p>
+        <ul id="estudantes"></ul>
+    </div>  
+
+    <script>
+        //referencias necessarias
+        var formulario = document.forms.cadastro;
+        var listaAdultos = document.getElementById("adultos");
+        var listaEstudantes = document.getElementById("estudantes");
+        var btnExcluir = document.forms.cadastro.excluir;
+        var btnInscrever = document.forms.cadastro.inscrever;
+        
+        btnExcluir.style.display = "none";
+        btnExcluir.addEventListener("click", excluir);
+        formulario.addEventListener("submit", addAtualizarParticipante);
+        var atualizando = 0;
+        var idUl;
+        function addAtualizarParticipante(e){
+            e.preventDefault();
+            //adicionar participantes
+            if(!atualizando){ //só é possivel colocar um novo participando se o outro ja estiver sendo editado
+                var vNome = document.forms.cadastro.nome.value;
+                var vIdade = document.forms.cadastro.idade.value;
+                if(vIdade>17){
+                    var novoLi = document.createElement("li");
+                    novoLi.innerHTML = "<span class='sNome'>"+vNome+"</span> - <span class='sIdade'>"+vIdade+"</span>";
+                    novoLi.addEventListener("click",editar);
+                    listaAdultos.appendChild(novoLi); 
+                } 
+                else {
+                    var novoLi = document.createElement("li");
+                    novoLi.innerHTML = "<span class='sNome'>"+vNome+"</span> - <span class='sIdade'>"+vIdade+"</span>";
+                    novoLi.addEventListener("click",editar);
+                    listaEstudantes.appendChild(novoLi); 
+                    
+                }
+                formulario.reset();
+                formulario.nome.focus();
+            }
+            //atualizando os participantes
+            else{
+                var listaDeLi = idUl.getElementsByTagName("li");
+                for (var i = 0; i < listaDeLi.length; i++) {
+                    if(listaDeLi[i].style.color == "red") { //verifica qual elemento esta vermelho, para ser editado
+                        var vNome = document.forms.cadastro.nome.value;
+                        var vIdade = document.forms.cadastro.idade.value;
+                        listaDeLi[i].innerHTML = "<span class='sNome'>"+vNome+"</span> - <span class='sIdade'>"+vIdade+"</span>";
+                        //reset
+                        document.forms.cadastro.idade.min="0";
+                        document.forms.cadastro.idade.max="";
+                        atualizando = 0;
+                        listaDeLi[i].style.color = "black";
+                        btnExcluir.style.display = "none";
+                        btnInscrever.value = "Inscrever";
+                        break;
+                    }
+                }
+                formulario.reset();
+                formulario.nome.focus();
+            }
+            
+        }
+        
+        function editar(){
+            if(!atualizando){ //só é possivel colocar outro participando se o outro já estiver sendo editado
+                //colocando valores para atualizar
+                document.forms.cadastro.nome.value=this.getElementsByClassName("sNome")[0].innerText;
+                document.forms.cadastro.idade.value=Number(this.getElementsByClassName("sIdade")[0].innerText);
+                this.style.color="red";
+                btnExcluir.style.display = "inline";
+                idUl = this.parentElement
+                
+                if(idUl.id=="adultos") document.forms.cadastro.idade.min=18;
+                else document.forms.cadastro.idade.max=17;
+                btnInscrever.value = "Atualizar";
+                atualizando = 1;
+            }
+            
+        }
+        function excluir(){
+            var listaDeLi = idUl.getElementsByTagName("li");
+            for (var i = 0; i < listaDeLi.length; i++) {
+                if(listaDeLi[i].style.color == "red") idUl.removeChild(listaDeLi[i]);
+            }
+            btnExcluir.style.display = "none";
+            atualizando = 0;
+            document.forms.cadastro.idade.min="0";
+            document.forms.cadastro.idade.max="";
+            btnInscrever.value = "Inscrever";
+            formulario.reset();
+            formulario.nome.focus();
+        }
+    </script>
+</body>
+</html>

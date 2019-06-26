@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colecao de Animais</title>
+    <style>
+    h1{
+        color: green;
+    }
+    form>table{
+        padding: 0.5em;
+        border: 0.1em solid;
+        margin: 0.5em;
+    }
+    thead,tfoot{
+        font-weight: bold;
+    }
+    .formulario input{
+        width: 100%;
+    }
+    .animais{
+        margin-left: 0.5em;
+        width: 299px;
+        border-collapse: collapse;
+    }
+    .animais td{
+        border: 0.1em solid;
+        text-align: center;
+        padding: 0.2em;
+    }
+    .botao{
+        width: 100%;
+    }
+
+</style>
+</head>
+<body>
+        <h1>Tudo sobre os Animais ( Características )</h1>
+        <form name="formulario">
+            <table>
+                <tr>
+                    <td>Animal:</td> 
+                    <td><input type="text" name="nome"></td>
+                </tr>
+                <tr>
+                    <td>Altura: </td>
+                    <td><input type="number" step="any" min="0" name="altura"></td>
+                </tr>
+                <tr>
+                    <td>Peso: </td>
+                    <td><input type="number" step="any" min="0" name="peso"></td>
+                </tr>
+                <tr>
+                    <td>Velocidade: </td>
+                    <td><input type="number" step="any" min="0" name="velocidade"></td>
+                </tr>
+                <tr>
+                    <td>Idade Máxima: </td>
+                    <td><input type="number" step="any" min="0" name="idadeMax"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input class="botao" type="submit" value="Inserir"></td>
+                </tr>
+            </table>
+        </form>
+        
+        <table class="animais"> 
+            <thead>
+                <tr>
+                    <td>Animal</td>
+                    <td>Altura</td>
+                    <td>Peso</td>
+                    <td>Velocidade</td>
+                    <td>Idade Máxima</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td>Média:</td>
+                    <td id="mAltura"></td>
+                    <td id="mPeso"></td>
+                    <td id="mVelocidade"></td>
+                    <td id="mIdademMax"></td>
+                </tr>
+            </tfoot>
+        </table>
+    
+        <ol type="i">
+            <li>Mais alto: <span id="alto"></span></li>
+            <li>Mais pesado: <span id="pesado"></span></li>
+            <li>Mais veloz: <span id="veloz"></span></li>
+            <li>Mais longevo: <span id="longevo"></span></li>   
+        </ol>
+    
+        <p>Acima da média do peso: <span id="acima"></span></p>
+    </body>
+
+    <script>
+    document.forms.formulario.addEventListener("submit",addAnimal);
+    vetorDeDados = [];
+    var mAltura = 0;
+    var mPeso = 0;
+    var mVelocidade = 0;
+    var mIdademMax = 0;
+    var totalDeAnimais = 0;
+   
+    function addAnimal(e){
+        e.preventDefault();
+         //referencias - formulario
+        var nome = document.forms.formulario.nome.value;
+        var altura = document.forms.formulario.altura.value;
+        var peso = document.forms.formulario.peso.value;
+        var velocidade = document.forms.formulario.velocidade.value;
+        var idadeMax = document.forms.formulario.idadeMax.value;
+        //referencias - tabela
+        var tbody = document.getElementsByTagName("tbody")[1];
+        var tdAltura = document.getElementById("mAltura");
+        var tdPeso = document.getElementById("mPeso");
+        var tdVelocidade = document.getElementById("mVelocidade");
+        var tdIdademMax = document.getElementById("mIdademMax");
+        //refencias - spans
+        salto = document.getElementById("alto");
+        spesado = document.getElementById("pesado");
+        sveloz = document.getElementById("veloz");
+        slongevo = document.getElementById("longevo");
+        //criando as linhas - tabela
+        novoTr = document.createElement("tr");
+        novoTdNome = document.createElement("td");
+        novoTdAltura = document.createElement("td");
+        novoTdPeso = document.createElement("td");
+        novoTdVelocidade = document.createElement("td");
+        novoTdIdademMax = document.createElement("td");
+        //adicionando valores nos tds
+        novoTdNome.innerText = nome;
+        novoTdAltura.innerText = altura;
+        novoTdPeso.innerText = peso;
+        novoTdVelocidade.innerText = velocidade; 
+        novoTdIdademMax.innerText = idadeMax;
+        //adicionando nova linha para a tabela
+        novoTr.appendChild(novoTdNome);
+        novoTr.appendChild(novoTdAltura);
+        novoTr.appendChild(novoTdPeso);
+        novoTr.appendChild(novoTdVelocidade);
+        novoTr.appendChild(novoTdIdademMax);
+        tbody.appendChild(novoTr);
+        //calculo da media e resultado em forma de ranking
+        vetorDeDados.push({nome:nome,altura:altura,peso:peso,velocidade:velocidade,idadeMax:idadeMax});
+        var alto=0,pesado=0,veloz=0,longevo=0;
+        for (var i = 0; i < vetorDeDados.length; i++) {
+            mAltura += Number(vetorDeDados[i].altura);
+            mPeso += Number(vetorDeDados[i].peso);
+            mVelocidade += Number(vetorDeDados[i].velocidade);
+            mIdademMax += Number(vetorDeDados[i].idadeMax);
+            if(vetorDeDados[i].altura>vetorDeDados[alto].altura) alto=i;
+            if(vetorDeDados[i].peso>vetorDeDados[pesado].peso) pesado=i;
+            if(vetorDeDados[i].velocidade>vetorDeDados[veloz].velocidade) veloz=i;
+            if(vetorDeDados[i].idadeMax>vetorDeDados[longevo].idadeMax) longevo=i;
+        }
+        //media
+        tdAltura.innerText = mAltura/vetorDeDados.length;
+        tdPeso.innerText = mPeso/vetorDeDados.length;
+        tdVelocidade.innerText = mVelocidade/vetorDeDados.length;
+        tdIdademMax.innerText = mIdademMax/vetorDeDados.length;
+        //Ranking
+        salto.innerText = vetorDeDados[alto].nome;
+        spesado.innerText = vetorDeDados[pesado].nome;
+        sveloz.innerText = vetorDeDados[veloz].nome;
+        slongevo.innerText = vetorDeDados[longevo].nome;
+        
+        //animais com peso acima da media
+        var mediaDoPeso = mPeso/vetorDeDados.length;
+        var nAnimais=0;
+        var sAcima = document.getElementById("acima");
+        for (var i = 0; i < vetorDeDados.length; i++) {
+            if(vetorDeDados[i].peso>mediaDoPeso) nAnimais++;
+        }
+        sAcima.innerText = nAnimais;
+        
+    }
+    </script>
+</body>
+</html>

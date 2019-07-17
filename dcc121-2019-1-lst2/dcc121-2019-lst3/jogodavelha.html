@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Velha</title>
+    <style>
+        .container {
+            width: 309px;
+            height: 309px;
+            position: relative;
+        }
+        .grid {
+            width: 100px;
+            height: 100px; 
+            position: relative;
+            background-color: red;
+            margin: 1px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id ="grid1" class="grid"></div>
+        <div id ="grid2" class="grid"></div>
+        <div id ="grid3" class="grid"></div>
+        <div id ="grid4" class="grid"></div>
+        <div id ="grid5" class="grid"></div>
+        <div id ="grid6" class="grid"></div>
+        <div id ="grid7" class="grid"></div>
+        <div id ="grid8" class="grid"></div>
+        <div id ="grid9" class="grid"></div>
+    </div>
+    <script>
+        var grid1 = document.getElementById("grid1");
+        var grid2 = document.getElementById("grid2");
+        var grid3 = document.getElementById("grid3");
+        var grid4 = document.getElementById("grid4");
+        var grid5 = document.getElementById("grid5");
+        var grid6 = document.getElementById("grid6");
+        var grid7 = document.getElementById("grid7");
+        var grid8 = document.getElementById("grid8");
+        var grid9 = document.getElementById("grid9");
+        var casa = "O";
+        var ret = 0;
+        grid1.onclick = function() {
+            addx(grid1);
+        }
+        grid2.onclick = function() {
+            addx(grid2);
+        }
+        grid3.onclick = function() {
+            addx(grid3);
+        }
+        grid4.onclick = function() {
+            addx(grid4);
+        }
+        grid5.onclick = function() {
+            addx(grid5);
+        }
+        grid6.onclick = function() {
+            addx(grid6);
+        }
+        grid7.onclick = function() {
+            addx(grid7);
+        }
+        grid8.onclick = function() {
+            addx(grid8);
+        }
+        grid9.onclick = function() {
+            addx(grid9);
+        }
+        function addx(i){
+            if (ret == 1)
+                return 0;
+            if (casa == "X" && i.innerText == ""){
+                casa = "O";
+                i.innerHTML = casa;
+            }
+            else if (casa == "O" && i.innerText == ""){
+                casa = "X";
+                i.innerHTML = casa;
+            }
+            verificaganhador();
+        }
+        function verificaganhador(){
+            if (grid1.innerText == "X" && grid2.innerText == "X" && grid3.innerText == "X"){
+                grid1.style.backgroundColor = "green";
+                grid2.style.backgroundColor = "green";
+                grid3.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "X" && grid5.innerText == "X" && grid9.innerText == "X"){
+                grid1.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "X" && grid4.innerText == "X" && grid7.innerText == "X"){
+                grid1.style.backgroundColor = "green";
+                grid4.style.backgroundColor = "green";
+                grid7.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid4.innerText == "X" && grid5.innerText == "X" && grid6.innerText == "X"){
+                grid4.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid6.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid7.innerText == "X" && grid8.innerText == "X" && grid9.innerText == "X"){
+                grid7.style.backgroundColor = "green";
+                grid8.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+             if (grid1.innerText == "X" && grid2.innerText == "X" && grid3.innerText == "X"){
+                grid1.style.backgroundColor = "green";
+                grid2.style.backgroundColor = "green";
+                grid3.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "X" && grid5.innerText == "X" && grid9.innerText == "X"){
+                grid1.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "X" && grid4.innerText == "X" && grid7.innerText == "X"){
+                grid1.style.backgroundColor = "green";
+                grid4.style.backgroundColor = "green";
+                grid7.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid4.innerText == "X" && grid5.innerText == "X" && grid6.innerText == "X"){
+                grid4.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid6.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid7.innerText == "X" && grid8.innerText == "X" && grid9.innerText == "X"){
+                grid7.style.backgroundColor = "green";
+                grid8.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            
+            if (grid2.innerText == "X" && grid5.innerText == "X" && grid8.innerText == "X"){
+                grid2.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid8.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid3.innerText == "X" && grid6.innerText == "X" && grid9.innerText == "X"){
+                grid3.style.backgroundColor = "green";
+                grid6.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid3.innerText == "X" && grid5.innerText == "X" && grid7.innerText == "X"){
+                grid3.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid7.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "O" && grid2.innerText == "O" && grid3.innerText == "O"){
+                grid1.style.backgroundColor = "green";
+                grid2.style.backgroundColor = "green";
+                grid3.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "O" && grid5.innerText == "O" && grid9.innerText == "O"){
+                grid1.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid1.innerText == "O" && grid4.innerText == "O" && grid7.innerText == "O"){
+                grid1.style.backgroundColor = "green";
+                grid4.style.backgroundColor = "green";
+                grid7.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid4.innerText == "O" && grid5.innerText == "O" && grid6.innerText == "O"){
+                grid4.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid6.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid7.innerText == "O" && grid8.innerText == "O" && grid9.innerText == "O"){
+                grid7.style.backgroundColor = "green";
+                grid8.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid2.innerText == "O" && grid5.innerText == "O" && grid8.innerText == "O"){
+                grid2.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid8.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid3.innerText == "O" && grid6.innerText == "O" && grid9.innerText == "O"){
+                grid3.style.backgroundColor = "green";
+                grid6.style.backgroundColor = "green";
+                grid9.style.backgroundColor = "green";
+                ret = 1;
+            }
+            if (grid3.innerText == "O" && grid5.innerText == "O" && grid7.innerText == "O"){
+                grid3.style.backgroundColor = "green";
+                grid5.style.backgroundColor = "green";
+                grid7.style.backgroundColor = "green";
+                ret = 1;
+            }
+            
+            
+            
+            
+           
+        }
+    </script>
+    
+</body>
+</html>

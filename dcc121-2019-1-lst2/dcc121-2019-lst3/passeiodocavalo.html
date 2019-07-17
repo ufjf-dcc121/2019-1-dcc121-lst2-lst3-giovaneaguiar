@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Passeio do Cavalo</title>
+    <style>
+        p{
+            margin: 0px;
+            font-size: 65px;
+            text-align: center;
+            cursor: default;
+        }
+        td{
+            border-width: 1px;
+            border-color: black;
+            border-style: solid;
+            background-color: rgba(0, 0, 255, 0.3);
+            width: 70px;
+            height: 70px;
+            display: inline-block;
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+    <CENTER id="corpo">
+            
+    </CENTER>
+    <script>
+        var primeira = true;
+        var cont = 0;
+        var qtPoss = 0;
+        var atual = [0, 0];
+        criaTabuleiro();
+        var resetar = document.getElementsByTagName("button")[0];
+        resetar.addEventListener("click", reset);
+        var complet;
+        function criaTabuleiro(){
+            var corpo = document.getElementById("corpo");
+            var tab = document.createElement("table");
+            for(var i=0; i<8; i++){
+                var tr = document.createElement("tr");
+                for(var j=0; j<8; j++){
+                    var td = document.createElement("td");
+                    var p = document.createElement("p");
+                    td.appendChild(p);
+                    tr.appendChild(td);
+                    td.addEventListener("click", ouvinteClick(i, j));
+                }
+                tab.appendChild(tr);
+            }
+            corpo.appendChild(tab);
+            var reset = document.createElement("button");
+            reset.textContent = "Resetar";
+            corpo.appendChild(reset);
+            corpo.appendChild(document.createElement("br"));
+            complet = document.createElement("button");
+            complet.textContent = "Completar Desafio";
+            corpo.appendChild(complet);
+            complet.style.display = "none";
+            atualizarTabuleiro();
+        }
+        function atualizarTabuleiro(){
+            if(primeira){
+                for(var i=0; i<64; i++){
+                    document.getElementsByTagName("td")[i].style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+                }
+            } else {
+                document.getElementsByTagName("td")[detInd(atual[0], atual[1])].style.backgroundColor = "rgba(0, 0, 255, 0.6)";
+                qtPoss = 0;
+                for(var i=0; i<8; i++){
+                    for(var j=0; j<8; j++){
+                        if(possibilidade(i, j)){
+                            document.getElementsByTagName("td")[detInd(i, j)].style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+                            qtPoss++;
+                        }
+                    }
+                }
+                bloqueiaCampo();
+                if(qtPoss == 0 && cont < 64) {
+                    alert("Game Over!");
+                } else if(cont == 64) {
+                    alert("Parabens! Você concluiu o desafio!");
+                }
+            }
+        }
+        function ouvinteClick(i, j) {
+            return function(){
+                if(primeira){
+                    atual[0] = i;
+                    atual[1] = j;
+                    primeira = false;
+                    cont++;
+                    document.getElementsByTagName("p")[detInd(i, j)].textContent = cont;
+                    complet.style.display = "inline";
+                    zeraCor();
+                    atualizarTabuleiro();
+                } else {
+                    if(document.getElementsByTagName("p")[detInd(i, j)].textContent == "" && possibilidade(i, j)){
+                        atual[0] = i;
+                        atual[1] = j;
+                        cont++;
+                        document.getElementsByTagName("p")[detInd(i, j)].textContent = cont;
+                        zeraCor();
+                        atualizarTabuleiro();
+                    }
+                }
+            }
+        }
+        function bloqueiaCampo(){
+            for(var i=0; i<8; i++){
+                for(var j=0; j<8; j++){
+                    if(document.getElementsByTagName("p")[detInd(i, j)].textContent != "" && detInd(i, j) != detInd(atual[0], atual[1])) {
+                        document.getElementsByTagName("td")[detInd(i, j)].style.backgroundColor = "rgba(68, 68, 68, 0.5)";
+                        if(possibilidade(i, j)){
+                            qtPoss--;
+                        }
+                    }
+                }
+            }
+        }
+        function zeraCor() {
+            for(var i=0; i<64; i++){
+                document.getElementsByTagName("td")[i].style.backgroundColor = "rgba(0, 0, 255, 0.3)";
+            }
+        }
+        function possibilidade(i, j){
+            if((atual[0]+2 == i || atual[0]-2 == i) && (atual[1]+1 == j || atual[1]-1 == j)){
+                return true;
+            } else if((atual[0]+1 == i || atual[0]-1 == i) && (atual[1]+2 == j || atual[1]-2 == j)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        function detInd(i, j){
+            return Number(i*8+j);
+        }
+        function reset(){
+            for(var i=0; i<64; i++) {
+                document.getElementsByTagName("p")[i].textContent = "";
+            }
+            primeira = true;
+            cont = 0;
+            complet.style.display = "none";
+            atualizarTabuleiro();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Torres de Hanoi</title>
+
+    <style>
+        .container {
+            width: 312px;
+            height: 151px;
+            background-color: gray;
+            position: relative;
+        }
+        .grid {
+            width: 100px;
+            height: 150px;
+            background-color: aqua;
+            float: left;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+        .torre1 {
+            background-color: red;
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 20px;
+            text-align: center;
+            border-bottom: 1px solid white;
+            border-top: 1px solid white;
+        }
+        .torre2 {
+            background-color: red;
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 20px;
+            margin-left: 104px;
+            text-align: center;
+            border-bottom: 1px solid white;
+            border-top: 1px solid white;
+        }
+        .torre3 {
+            background-color: red;
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 20px;
+            margin-left: 208px;
+            text-align: center;
+            border-bottom: 1px solid white;
+            border-top: 1px solid white;
+        }
+        .mtorre{
+            width: 100px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h3>Clique no Disco que deseja mover e depois clique em qual torre deseja mover o disco</h3>
+    <div class="container">
+        <div id="coluna1" class="grid">
+            <div id="ob1" onclick="selecionardisco(ob1)" class="torre1">1</div>
+            <div id="ob2" onclick="selecionardisco(ob2)" class="torre1">2</div>
+            <div id="ob3" onclick="selecionardisco(ob3)" class="torre1">3</div>
+            <div id="ob4" onclick="selecionardisco(ob4)" class="torre1">4</div>
+            <div id="ob5" onclick="selecionardisco(ob5)" class="torre1">5</div>
+        </div>
+        <div id="coluna2" class="grid"> 
+        </div>
+        <div id="coluna3" class="grid">            
+        </div>
+
+    </div>
+    <button class="mtorre" onclick="mudardisco('coluna1')">Torre 1</button>
+    <button class="mtorre" onclick="mudardisco('coluna2')">Torre 2</button>
+    <button class="mtorre" onclick="mudardisco('coluna3')">Torre 3</button>
+
+    <script>
+        var coluna1 = document.getElementById("coluna1");
+        var coluna2 = document.getElementById("coluna2");
+        var coluna3 = document.getElementById("coluna3");
+        var ob1 = document.getElementById("ob1");
+        var ob2 = document.getElementById("ob2");
+        var ob3 = document.getElementById("ob3");
+        var ob4 = document.getElementById("ob4");
+        var ob5 = document.getElementById("ob5");
+        var obant;
+        var disco;
+        selecionardisco(ob1);
+        
+        function selecionardisco(ob){
+            ob.style.backgroundColor = "yellow";
+            
+            if (obant != null)
+                obant.style.backgroundColor = "red";
+            
+            
+            obant = ob;
+            disco = ob;
+        }
+         
+         function mudardisco(c){
+            if (document.getElementById(c).childNodes[0] > disco)
+            document.getElementById(c).appendChild(disco);
+         }
+        
+    </script>
+    
+</body>
+</html>
